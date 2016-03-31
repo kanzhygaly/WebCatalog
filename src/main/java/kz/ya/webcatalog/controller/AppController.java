@@ -45,7 +45,7 @@ public class AppController {
 
         List<Product> products = productService.findAllProducts();
         model.addAttribute("products", products);
-        return "productslist";
+        return "productlist";
     }
 
     /**
@@ -78,7 +78,7 @@ public class AppController {
         }
         productService.saveProduct(product);
         model.addAttribute("success", "Product " + product.getName() + " created successfully");
-        return "createProductSuccess";
+        return "productSuccess";
     }
 
     /**
@@ -113,7 +113,7 @@ public class AppController {
         }
         productService.updateProduct(product);
         model.addAttribute("success", "Product " + product.getName() + " updated successfully");
-        return "updateProductSuccess";
+        return "productSuccess";
     }
 
     /**
