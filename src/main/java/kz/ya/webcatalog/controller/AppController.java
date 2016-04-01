@@ -1,5 +1,6 @@
 /*
  * https://habrahabr.ru/post/248541/
+http://howtodoinjava.com/spring/spring-orm/spring-3-and-hibernate-integration-tutorial-with-example/
  */
 package kz.ya.webcatalog.controller;
 
