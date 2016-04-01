@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+		
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <!-- Enable this to see the SQL statements in the logs-->
+        <property name="show_sql">false</property>
+        <!-- Entity mappings -->
+        <mapping class="kz.ya.webcatalog.entity.Category"></mapping>
+        <mapping class="kz.ya.webcatalog.entity.Product"></mapping>
+    </session-factory>
+</hibernate-configuration>

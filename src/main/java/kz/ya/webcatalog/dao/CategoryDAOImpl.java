@@ -9,11 +9,13 @@ import java.util.List;
 import kz.ya.webcatalog.entity.Category;
 import org.hibernate.Hibernate;
 import org.hibernate.criterion.Order;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author YERLAN
  */
+@Repository
 public class CategoryDAOImpl extends AbstractDAO<Long, Category> implements CategoryDAO {
 
     @Override

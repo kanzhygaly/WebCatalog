@@ -23,6 +23,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -53,8 +54,9 @@ public class Product implements Serializable {
     private BigDecimal price;
 
     @NotNull
-    @Column(name = "dateCreate", nullable = false)
+    @Column(name = "date_create", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private Date dateCreate;
 
     @Column(name = "image")

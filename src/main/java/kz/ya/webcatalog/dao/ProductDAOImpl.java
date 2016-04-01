@@ -10,11 +10,13 @@ import kz.ya.webcatalog.entity.Category;
 import kz.ya.webcatalog.entity.Product;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author YERLAN
  */
+@Repository
 public class ProductDAOImpl extends AbstractDAO<Long, Product> implements ProductDAO {
 
     @Override

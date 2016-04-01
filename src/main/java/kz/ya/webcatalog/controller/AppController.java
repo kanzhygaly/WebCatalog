@@ -1,12 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * https://habrahabr.ru/post/248541/
  */
 package kz.ya.webcatalog.controller;
 
+import java.util.Date;
 import java.util.List;
 import javax.validation.Valid;
+import kz.ya.webcatalog.entity.Category;
 import kz.ya.webcatalog.entity.Product;
 import kz.ya.webcatalog.service.CategoryService;
 import kz.ya.webcatalog.service.ProductService;
@@ -15,9 +15,11 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 /**
  *
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 @RequestMapping("/")
+@SessionAttributes("categories")
 public class AppController {
 
     @Autowired
@@ -40,7 +43,7 @@ public class AppController {
      * @param model
      * @return 
      */
-    @RequestMapping(value = {"/", "/list"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/", "/products"}, method = RequestMethod.GET)
     public String listProducts(ModelMap model) {
 
         List<Product> products = productService.findAllProducts();
@@ -54,7 +57,7 @@ public class AppController {
      * @param model
      * @return 
      */
-    @RequestMapping(value = {"/new-product"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/products/add"}, method = RequestMethod.GET)
     public String newUser(ModelMap model) {
         Product product = new Product();
         model.addAttribute("product", product);
@@ -71,11 +74,12 @@ public class AppController {
      * @param model
      * @return 
      */
-    @RequestMapping(value = {"/new-product"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/products/add"}, method = RequestMethod.POST)
     public String saveUser(@Valid Product product, BindingResult result, ModelMap model) {
         if (result.hasErrors()) {
             return "productForm";
         }
+        product.setDateCreate(new Date());
         productService.saveProduct(product);
         model.addAttribute("success", "Product " + product.getName() + " created successfully");
         return "productSuccess";
@@ -88,7 +92,7 @@ public class AppController {
      * @param model
      * @return 
      */
-    @RequestMapping(value = {"/edit-product-{id}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/products/edit/{id}"}, method = RequestMethod.GET)
     public String editUser(@PathVariable Long id, ModelMap model) {
         Product product = productService.findProduct(id);
         model.addAttribute("product", product);
@@ -106,7 +110,7 @@ public class AppController {
      * @param model
      * @return 
      */
-    @RequestMapping(value = {"/edit-product-{id}"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/products/edit/{id}"}, method = RequestMethod.POST)
     public String updateUser(@Valid Product product, BindingResult result, ModelMap model, @PathVariable Long id) {
         if (result.hasErrors()) {
             return "productForm";
@@ -122,9 +126,19 @@ public class AppController {
      * @param id
      * @return 
      */
-    @RequestMapping(value = {"/delete-product-{id}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/products/delete/{id}"}, method = RequestMethod.GET)
     public String deleteUser(@PathVariable Long id) {
         productService.deleteProduct(id);
-        return "redirect:/list";
+        return "redirect:/products";
+    }
+    
+    /**
+     * This method will provide UserProfile list to views
+     * 
+     * @return 
+     */
+    @ModelAttribute("categories")
+    public List<Category> initializeCategories() {
+        return categoryService.findAllCategories();
     }
 }
