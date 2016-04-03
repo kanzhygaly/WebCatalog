@@ -28,7 +28,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class Category implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id")
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id")
+    @GeneratedValue
     @Column(name = "id")
     private Long id;
 
@@ -41,6 +42,9 @@ public class Category implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category", fetch = FetchType.LAZY)
     private Set<Product> products;
+
+    public Category() {
+    }
 
     public Long getId() {
         return id;

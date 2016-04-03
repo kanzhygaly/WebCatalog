@@ -34,7 +34,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Product implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id")
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id")
+    @GeneratedValue
     @Column(name = "id")
     private Long id;
 
@@ -66,6 +67,9 @@ public class Product implements Serializable {
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Category category;
+
+    public Product() {
+    }
 
     public Long getId() {
         return id;
