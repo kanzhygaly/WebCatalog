@@ -13,15 +13,17 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Product</title>
         <link href="<c:url value='/static/css/bootstrap.min.css' />" rel="stylesheet"></link>
-        <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
     </head>
-    <body>
-        <div class="generic-container">
-            <div class="well lead">User Registration Form</div>
-            <form:form method="POST" modelAttribute="product" class="form-horizontal">
-                <form:input type="hidden" path="id" id="id"/>
 
-                <div class="row">
+    <body>
+        <div class="container">
+            <div class="well lead">Product Form</div>
+
+            <!-- Main component for a primary marketing message or call to action -->
+            <div class="jumbotron">
+                <form:form method="POST" modelAttribute="product" class="form-horizontal">
+                    <form:input type="hidden" path="id" id="id"/>
+
                     <div class="form-group col-md-12">
                         <label class="col-md-3 control-lable" for="name">Name</label>
                         <div class="col-md-7">
@@ -31,9 +33,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
                     <div class="form-group col-md-12">
                         <label class="col-md-3 control-lable" for="description">Description</label>
                         <div class="col-md-7">
@@ -43,9 +43,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
                     <div class="form-group col-md-12">
                         <label class="col-md-3 control-lable" for="producer">Producer</label>
                         <div class="col-md-7">
@@ -55,9 +53,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
                     <div class="form-group col-md-12">
                         <label class="col-md-3 control-lable" for="price">Price</label>
                         <div class="col-md-7">
@@ -67,22 +63,18 @@
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <c:choose>
-                    <c:when test="${edit}">
-                        <div class="row">
+                    <c:choose>
+                        <c:when test="${edit}">
                             <div class="form-group col-md-12">
                                 <label class="col-md-3 control-lable" for="dateCreate">Create date</label>
                                 <div class="col-md-7">
                                     <form:input type="text" path="dateCreate" id="dateCreate" class="form-control input-sm" disabled="true" />
                                 </div>
                             </div>
-                        </div>
-                    </c:when>
-                </c:choose>
+                        </c:when>
+                    </c:choose>
 
-                <div class="row">
                     <div class="form-group col-md-12">
                         <label class="col-md-3 control-lable" for="image">Image</label>
                         <div class="col-md-7">
@@ -92,9 +84,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
                     <div class="form-group col-md-12">
                         <label class="col-md-3 control-lable" for="category">Category</label>
                         <div class="col-md-7">
@@ -104,9 +94,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
                     <div class="form-actions floatRight">
                         <c:choose>
                             <c:when test="${edit}">
@@ -117,8 +105,8 @@
                             </c:otherwise>
                         </c:choose>
                     </div>
-                </div>
-            </form:form>
+                </form:form>
+            </div>
         </div>
     </body>
 </html>

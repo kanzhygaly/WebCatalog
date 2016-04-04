@@ -12,14 +12,14 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Operation success</title>
         <link href="<c:url value='/static/css/bootstrap.min.css' />" rel="stylesheet"></link>
-        <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
     </head>
+
     <body>
-        <div class="generic-container">
+        <div class="container">
+
             <div class="alert alert-success lead">
                 ${success}
             </div>
-
             <span class="well floatRight">
                 Go to <a href="<c:url value='/products' />">Products</a>
             </span>
