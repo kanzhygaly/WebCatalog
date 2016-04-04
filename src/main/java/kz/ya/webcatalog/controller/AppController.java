@@ -39,7 +39,7 @@ public class AppController {
     MessageSource messageSource;
     
     /**
-     * This method will list all existing categories.
+     * This method will list all existing products.
      * 
      * @param model
      * @return 
@@ -53,13 +53,13 @@ public class AppController {
     }
 
     /**
-     * This method will provide the medium to add a new user.
+     * This method will provide the medium to add a new product.
      * 
      * @param model
      * @return 
      */
     @RequestMapping(value = {"/products/add"}, method = RequestMethod.GET)
-    public String newUser(ModelMap model) {
+    public String newProduct(ModelMap model) {
         Product product = new Product();
         model.addAttribute("product", product);
         model.addAttribute("edit", false);
@@ -68,7 +68,7 @@ public class AppController {
 
     /**
      * This method will be called on form submission, handling POST request for
-     * saving user in database. It also validates the user input
+     * saving product in database. It also validates the user input
      * 
      * @param product
      * @param result
@@ -76,7 +76,7 @@ public class AppController {
      * @return 
      */
     @RequestMapping(value = {"/products/add"}, method = RequestMethod.POST)
-    public String saveUser(@Valid Product product, BindingResult result, ModelMap model) {
+    public String saveProduct(@Valid Product product, BindingResult result, ModelMap model) {
         if (result.hasErrors()) {
             return "productForm";
         }
@@ -87,14 +87,14 @@ public class AppController {
     }
 
     /**
-     * This method will provide the medium to update an existing user.
+     * This method will provide the medium to update an existing product.
      * 
      * @param id
      * @param model
      * @return 
      */
     @RequestMapping(value = {"/products/edit/{id}"}, method = RequestMethod.GET)
-    public String editUser(@PathVariable Long id, ModelMap model) {
+    public String editProduct(@PathVariable Long id, ModelMap model) {
         Product product = productService.findProduct(id);
         model.addAttribute("product", product);
         model.addAttribute("edit", true);
@@ -103,7 +103,7 @@ public class AppController {
 
     /**
      * This method will be called on form submission, handling POST request for
-     * updating user in database. It also validates the user input
+     * updating product in database. It also validates the user input
      * 
      * @param product
      * @param result
@@ -112,7 +112,7 @@ public class AppController {
      * @return 
      */
     @RequestMapping(value = {"/products/edit/{id}"}, method = RequestMethod.POST)
-    public String updateUser(@Valid Product product, BindingResult result, ModelMap model, @PathVariable Long id) {
+    public String updateProduct(@Valid Product product, BindingResult result, ModelMap model, @PathVariable Long id) {
         if (result.hasErrors()) {
             return "productForm";
         }
@@ -122,24 +122,71 @@ public class AppController {
     }
 
     /**
-     * This method will delete an user by it's SSOID value.
+     * This method will delete a product by it's id value.
      * 
      * @param id
      * @return 
      */
     @RequestMapping(value = {"/products/delete/{id}"}, method = RequestMethod.GET)
-    public String deleteUser(@PathVariable Long id) {
+    public String deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
         return "redirect:/products";
     }
     
     /**
-     * This method will provide UserProfile list to views
+     * This method will provide Category list to product form view
      * 
      * @return 
      */
     @ModelAttribute("categories")
     public List<Category> initializeCategories() {
         return categoryService.findAllCategories();
+    }
+    
+    /**
+     * This method will list all existing categories.
+     * 
+     * @param model
+     * @return 
+     */
+    @RequestMapping(value = {"/", "/categories"}, method = RequestMethod.GET)
+    public String listCategories(ModelMap model) {
+
+        List<Category> categories = categoryService.findAllCategories();
+        model.addAttribute("categories", categories);
+        return "categoryList";
+    }
+    
+    /**
+     * This method will provide the medium to add a new category.
+     * 
+     * @param model
+     * @return 
+     */
+    @RequestMapping(value = {"/categories/add"}, method = RequestMethod.GET)
+    public String newCategory(ModelMap model) {
+        Category category = new Category();
+        model.addAttribute("category", category);
+        model.addAttribute("edit", false);
+        return "categoryForm";
+    }
+
+    /**
+     * This method will be called on form submission, handling POST request for
+     * saving category in database. It also validates the user input
+     * 
+     * @param category
+     * @param result
+     * @param model
+     * @return 
+     */
+    @RequestMapping(value = {"/categories/add"}, method = RequestMethod.POST)
+    public String saveCategory(@Valid Category category, BindingResult result, ModelMap model) {
+        if (result.hasErrors()) {
+            return "categoryForm";
+        }
+        categoryService.saveCategory(category);
+        model.addAttribute("success", "Category " + category.getName() + " created successfully");
+        return "categorySuccess";
     }
 }
