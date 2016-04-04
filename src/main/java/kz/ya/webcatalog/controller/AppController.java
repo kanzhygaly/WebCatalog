@@ -49,7 +49,7 @@ public class AppController {
 
         List<Product> products = productService.findAllProducts();
         model.addAttribute("products", products);
-        return "productlist";
+        return "productList";
     }
 
     /**

@@ -51,7 +51,7 @@
                 </table>
             </div>
             <div class="well">
-                <a href="<c:url value='/products/add' />">Add New Product</a>
+                <a href="<c:url value='/products/add' />">New product</a>
             </div>
         </div>
     </body>

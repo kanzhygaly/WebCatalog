@@ -80,10 +80,10 @@
       <svg path=""/>
     </DiaProps>
     <TbGl bkCl="ff6666ff" sch="public" tbl="category" x="50" y="50"/>
-    <TbGl bkCl="ff6666ff" sch="public" tbl="product" x="493" y="44"/>
+    <TbGl bkCl="ff6666ff" sch="public" tbl="product" x="392" y="50"/>
     <FkGl bkCl="ff000000" childEdge="WEST" nm="public.product.fk_product_category" parentEdge="EAST" positioner="OneLineUserLinkPositioner">
       <positionableLines>
-        <positionableLine lineRole="SINGLE_LINE" x1="272" x2="493" y1="83" y2="83"/>
+        <positionableLine lineRole="SINGLE_LINE" x1="272" x2="392" y1="83" y2="83"/>
       </positionableLines>
     </FkGl>
     <Notes/>
