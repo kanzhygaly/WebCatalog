@@ -6,7 +6,6 @@
 package kz.ya.webcatalog.dao;
 
 import java.util.List;
-import kz.ya.webcatalog.entity.Category;
 import kz.ya.webcatalog.entity.Product;
 
 /**
@@ -19,7 +18,7 @@ public interface ProductDAO {
      
     List<Product> findAll();
     
-    List<Product> findAllByCategory(Category category);
+    List<Product> findAllByCategoryId(Long categoryId);
     
     void persist(Product product);
      

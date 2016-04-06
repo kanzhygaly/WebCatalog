@@ -6,7 +6,6 @@
 package kz.ya.webcatalog.service;
 
 import java.util.List;
-import kz.ya.webcatalog.entity.Category;
 import kz.ya.webcatalog.entity.Product;
 
 /**
@@ -25,5 +24,5 @@ public interface ProductService {
     
     List<Product> findAllProducts();
     
-    List<Product> findAllProductsByCategory(Category category);
+    List<Product> findAllProductsByCategory(Long categoryId);
 }

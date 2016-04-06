@@ -20,7 +20,7 @@ public interface CategoryService {
      
     void updateCategory(Category category);
      
-    void deleteCategory(Category category);
+    void deleteCategory(Long id);
  
     List<Category> findAllCategories(); 
 }

@@ -4,7 +4,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Product success</title>
+        <title>Category success</title>
         <link href="<c:url value='/static/css/bootstrap.min.css' />" rel="stylesheet"></link>
     </head>
 
@@ -18,8 +18,8 @@
                     </div>
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li class="active"><a href="/products">Products</a></li>
-                            <li><a href="/categories">Categories</a></li>
+                            <li><a href="/products">Products</a></li>
+                            <li class="active"><a href="/categories">Categories</a></li>
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div><!--/.container-fluid -->
@@ -29,7 +29,7 @@
                 ${success}
             </div>
             <span class="well pull-right">
-                Go to <a href="<c:url value='/products' />">product list</a>
+                Go to <a href="<c:url value='/categories' />">category list</a>
             </span>
         </div>
     </body>

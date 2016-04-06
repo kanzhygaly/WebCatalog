@@ -60,9 +60,9 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> findAllProducts() {
         return productDAO.findAll();
     }
-
+    
     @Override
-    public List<Product> findAllProductsByCategory(Category category) {
-        return productDAO.findAllByCategory(category);
+    public List<Product> findAllProductsByCategory(Long categoryId) {
+        return productDAO.findAllByCategoryId(categoryId);
     }
 }

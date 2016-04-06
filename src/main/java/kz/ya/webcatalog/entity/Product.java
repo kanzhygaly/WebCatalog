@@ -6,6 +6,7 @@
 package kz.ya.webcatalog.entity;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
@@ -17,13 +18,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
+import org.apache.commons.codec.binary.Base64;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -34,8 +36,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Product implements Serializable {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id")
-    @GeneratedValue
+    @SequenceGenerator(name = "my_seq", sequenceName = "seq_id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "my_seq")
     @Column(name = "id")
     private Long id;
 
@@ -57,7 +59,6 @@ public class Product implements Serializable {
     @NotNull
     @Column(name = "date_create", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private Date dateCreate;
 
     @Column(name = "image")
@@ -65,7 +66,7 @@ public class Product implements Serializable {
 
     @NotNull
     @JoinColumn(name = "category_id", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Category category;
 
     public Product() {
@@ -119,6 +120,10 @@ public class Product implements Serializable {
         this.dateCreate = dateCreate;
     }
 
+    public String getEncodedImage() {
+        return Base64.encodeBase64String(image);
+    }
+
     public byte[] getImage() {
         return image;
     }
@@ -162,6 +167,6 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return name;
+        return "Product{" + "id=" + id + ", name=" + name + ", description=" + description + ", producer=" + producer + ", price=" + price + ", dateCreate=" + dateCreate + ", image=" + image + ", category=" + category + '}';
     }
 }

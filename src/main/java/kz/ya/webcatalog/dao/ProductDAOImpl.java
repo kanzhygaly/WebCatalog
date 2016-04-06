@@ -6,7 +6,6 @@
 package kz.ya.webcatalog.dao;
 
 import java.util.List;
-import kz.ya.webcatalog.entity.Category;
 import kz.ya.webcatalog.entity.Product;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -30,7 +29,7 @@ public class ProductDAOImpl extends AbstractDAO<Long, Product> implements Produc
     }
 
     @Override
-    public List<Product> findAllByCategory(Category category) {
-        return createEntityCriteria().add(Restrictions.eq("category", category)).addOrder(Order.asc("name")).list();
+    public List<Product> findAllByCategoryId(Long categoryId) {
+        return createEntityCriteria().add(Restrictions.eq("category.id", categoryId)).addOrder(Order.asc("name")).list();
     }
 }

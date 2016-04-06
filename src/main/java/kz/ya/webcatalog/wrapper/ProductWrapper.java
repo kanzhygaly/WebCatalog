@@ -3,48 +3,41 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kz.ya.webcatalog.entity;
+package kz.ya.webcatalog.wrapper;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
-import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
  * @author YERLAN
  */
-@Entity
-@Table(name = "category")
-public class Category implements Serializable {
+public class ProductWrapper implements Serializable {
 
-    @Id
-    @SequenceGenerator(name="my_seq", sequenceName="seq_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "my_seq")
-    @Column(name = "id")
     private Long id;
 
     @NotEmpty
-    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "description")
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category", fetch = FetchType.LAZY)
-    private Set<Product> products;
+    private String producer;
 
-    public Category() {
+    @NotNull
+    @Digits(integer = 8, fraction = 2)
+    private BigDecimal price;
+
+    private MultipartFile image;
+
+    @NotNull
+    private Long category;
+
+    public ProductWrapper() {
     }
 
     public Long getId() {
@@ -71,18 +64,42 @@ public class Category implements Serializable {
         this.description = description;
     }
 
-    public Set<Product> getProducts() {
-        return products;
+    public String getProducer() {
+        return producer;
     }
 
-    public void setProducts(Set<Product> products) {
-        this.products = products;
+    public void setProducer(String producer) {
+        this.producer = producer;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public MultipartFile getImage() {
+        return image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
+    }
+
+    public Long getCategory() {
+        return category;
+    }
+
+    public void setCategory(Long category) {
+        this.category = category;
     }
 
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 59 * hash + Objects.hashCode(this.id);
+        hash = 71 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -97,11 +114,8 @@ public class Category implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Category other = (Category) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        final ProductWrapper other = (ProductWrapper) obj;
+        return Objects.equals(this.id, other.id);
     }
 
     @Override
