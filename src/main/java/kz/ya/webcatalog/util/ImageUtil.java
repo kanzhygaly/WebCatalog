@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Utility class for image manipulations
  */
 package kz.ya.webcatalog.util;
 
@@ -19,6 +17,16 @@ import javax.imageio.ImageIO;
  */
 public class ImageUtil {
     
+    /**
+     * This method returns scaled image from original by given parameters
+     * 
+     * @param fileData
+     * @param width
+     * @param height
+     * @param ext Image format
+     * @return
+     * @throws IOException 
+     */
     public static byte[] scale(byte[] fileData, int width, int height, String ext) throws IOException {
         ByteArrayInputStream in = new ByteArrayInputStream(fileData);
         BufferedImage img = ImageIO.read(in);

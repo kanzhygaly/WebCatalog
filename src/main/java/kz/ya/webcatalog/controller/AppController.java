@@ -1,13 +1,16 @@
+/*
+ * Main controller
+ */
 package kz.ya.webcatalog.controller;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 import javax.validation.Valid;
 import kz.ya.webcatalog.entity.Category;
 import kz.ya.webcatalog.entity.Product;
 import kz.ya.webcatalog.service.CategoryService;
 import kz.ya.webcatalog.service.ProductService;
+import kz.ya.webcatalog.util.CastUtil;
 import kz.ya.webcatalog.util.ImageUtil;
 import kz.ya.webcatalog.wrapper.ProductWrapper;
 import kz.ya.webcatalog.wrapper.SearchWrapper;
@@ -100,8 +103,8 @@ public class AppController {
             System.out.println(result.getAllErrors());
             return "productForm";
         }
-        Product product = new Product();
 
+        byte[] image = null;
         if (!productWrapper.getImage().isEmpty()) {
             if (!productWrapper.getImage().getContentType().equals("image/jpeg") && !productWrapper.getImage().getContentType().equals("image/png")) {
                 result.rejectValue("image", "NotCompatible.productBean.image");
@@ -109,24 +112,15 @@ public class AppController {
             }
             try {
                 String ext = productWrapper.getImage().getContentType().equals("image/png") ? "png" : "jpg";
-                byte[] scaledImage = ImageUtil.scale(productWrapper.getImage().getBytes(), 100, 100, ext);
-                product.setImage(scaledImage);
+                image = ImageUtil.scale(productWrapper.getImage().getBytes(), 100, 100, ext);
             } catch (IOException ex) {
                 result.rejectValue("image", "error", ex.getMessage());
                 return "productForm";
             }
         }
 
-        product.setCategory(categoryService.findCategory(productWrapper.getCategory()));
-
-        product.setName(productWrapper.getName());
-        product.setDescription(productWrapper.getDescription());
-        product.setProducer(productWrapper.getProducer());
-        product.setPrice(productWrapper.getPrice());
-        product.setDateCreate(new Date());
-
-        productService.saveProduct(product);
-        model.addAttribute("success", "Product " + product.getName() + " created successfully");
+        productService.saveProduct(productWrapper, image);
+        model.addAttribute("success", "Product " + productWrapper.getName() + " created successfully");
         return "productSuccess";
     }
 
@@ -140,7 +134,9 @@ public class AppController {
     @RequestMapping(value = {"/products/edit/{id}"}, method = RequestMethod.GET)
     public String editProduct(@PathVariable Long id, ModelMap model) {
         Product product = productService.findProduct(id);
-        model.addAttribute("product", product);
+        ProductWrapper wrapper = CastUtil.castProductToWrapper(product);
+        model.addAttribute("productWrapper", wrapper);
+        model.addAttribute("productImage", product.getEncodedImage());
         model.addAttribute("edit", true);
         return "productForm";
     }
@@ -149,19 +145,35 @@ public class AppController {
      * This method will be called on form submission, handling POST request for
      * updating product in database. It also validates the user input
      *
-     * @param product
+     * @param productWrapper 
      * @param result
      * @param id
      * @param model
      * @return
      */
     @RequestMapping(value = {"/products/edit/{id}"}, method = RequestMethod.POST)
-    public String updateProduct(@Valid Product product, BindingResult result, ModelMap model, @PathVariable Long id) {
+    public String updateProduct(@Valid ProductWrapper productWrapper, BindingResult result, ModelMap model, @PathVariable Long id) {
         if (result.hasErrors()) {
             return "productForm";
         }
-        productService.updateProduct(product);
-        model.addAttribute("success", "Product " + product.getName() + " updated successfully");
+        
+        byte[] image = null;
+        if (!productWrapper.getImage().isEmpty()) {
+            if (!productWrapper.getImage().getContentType().equals("image/jpeg") && !productWrapper.getImage().getContentType().equals("image/png")) {
+                result.rejectValue("image", "NotCompatible.productBean.image");
+                return "productForm";
+            }
+            try {
+                String ext = productWrapper.getImage().getContentType().equals("image/png") ? "png" : "jpg";
+                image = ImageUtil.scale(productWrapper.getImage().getBytes(), 100, 100, ext);
+            } catch (IOException ex) {
+                result.rejectValue("image", "error", ex.getMessage());
+                return "productForm";
+            }
+        }
+        
+        productService.updateProduct(productWrapper, image);
+        model.addAttribute("success", "Product " + productWrapper.getName() + " updated successfully");
         return "productSuccess";
     }
 

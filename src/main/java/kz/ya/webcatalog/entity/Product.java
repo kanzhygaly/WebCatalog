@@ -1,12 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Entity class for table product
  */
 package kz.ya.webcatalog.entity;
 
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
@@ -120,6 +117,11 @@ public class Product implements Serializable {
         this.dateCreate = dateCreate;
     }
 
+    /**
+     * This method returns encoded string of image byte array using Base64
+     * 
+     * @return 
+     */
     public String getEncodedImage() {
         return Base64.encodeBase64String(image);
     }
@@ -159,10 +161,7 @@ public class Product implements Serializable {
             return false;
         }
         final Product other = (Product) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.id, other.id);
     }
 
     @Override

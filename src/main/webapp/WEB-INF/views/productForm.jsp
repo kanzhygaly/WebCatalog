@@ -79,6 +79,9 @@
                             <form:errors path="image" class="help-inline"/>
                         </div>
                     </div>
+                    <c:if test="${not empty productImage}">
+                        <img src="data:image/jpeg;base64,${productImage}" class="img-rounded" />
+                    </c:if>
                 </div>
 
                 <div class="form-group col-md-12">

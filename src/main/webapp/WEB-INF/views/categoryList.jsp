@@ -6,6 +6,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Categories</title>
         <link href="<c:url value='/static/css/bootstrap.min.css' />" rel="stylesheet"></link>
+        <script type="text/javascript" src="<c:url value='/static/js/app.js' />"></script>
     </head>
     <body>
 
@@ -47,7 +48,7 @@
                                 <td>${category.description}</td>
                                 <td class="text-right">
                                     <a href="<c:url value='/categories/edit/${category.id}' />" class="btn btn-success">edit</a>
-                                    <a href="<c:url value='/categories/delete/${category.id}' />" class="btn btn-danger">delete</a>
+                                    <a href="<c:url value='/categories/delete/${category.id}' />" class="btn btn-danger" onclick="return confirmDelete()">delete</a>
                                 </td>
                             </tr>
                         </c:forEach>

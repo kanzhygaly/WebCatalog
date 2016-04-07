@@ -1,7 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Wrapper class for Product entity
+ * This wrapper is used in add and edit product forms
  */
 package kz.ya.webcatalog.wrapper;
 

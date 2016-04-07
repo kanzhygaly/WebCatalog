@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package kz.ya.webcatalog.dao;
 
 import java.util.List;
@@ -22,6 +17,7 @@ public class CategoryDAOImpl extends AbstractDAO<Long, Category> implements Cate
     public Category find(Long id) {
         Category category = getByKey(id);
         if (category != null) {
+            // initialize proxy collection
             Hibernate.initialize(category.getProducts());
         }
         return category;

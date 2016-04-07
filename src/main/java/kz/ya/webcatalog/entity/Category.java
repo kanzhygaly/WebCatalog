@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Entity class for table category
  */
 package kz.ya.webcatalog.entity;
 
@@ -98,10 +96,7 @@ public class Category implements Serializable {
             return false;
         }
         final Category other = (Category) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.id, other.id);
     }
 
     @Override

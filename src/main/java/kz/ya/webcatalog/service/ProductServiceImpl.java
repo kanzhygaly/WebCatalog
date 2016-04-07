@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package kz.ya.webcatalog.service;
 
+import java.util.Date;
 import java.util.List;
 import kz.ya.webcatalog.dao.ProductDAO;
-import kz.ya.webcatalog.entity.Category;
 import kz.ya.webcatalog.entity.Product;
+import kz.ya.webcatalog.wrapper.ProductWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +19,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductDAO productDAO;
+    @Autowired
+    private CategoryService categoryService;
 
     @Override
     public Product findProduct(Long id) {
@@ -30,21 +28,32 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void saveProduct(Product product) {
+    public void saveProduct(ProductWrapper wrapper, byte[] image) {
+        Product product = new Product();
+        product.setName(wrapper.getName());
+        product.setDescription(wrapper.getDescription());
+        product.setProducer(wrapper.getProducer());
+        product.setPrice(wrapper.getPrice());
+        product.setDateCreate(new Date());
+        if (image != null) {
+            product.setImage(image);
+        }
+        product.setCategory(categoryService.findCategory(wrapper.getCategory()));
         productDAO.persist(product);
     }
 
     @Override
-    public void updateProduct(Product product) {
-        Product entity = productDAO.find(product.getId());
+    public void updateProduct(ProductWrapper wrapper, byte[] image) {
+        Product entity = productDAO.find(wrapper.getId());
         if (entity != null) {
-            entity.setName(product.getName());
-            entity.setDescription(product.getDescription());
-            entity.setProducer(product.getProducer());
-            entity.setPrice(product.getPrice());
-            entity.setDateCreate(product.getDateCreate());
-            entity.setImage(product.getImage());
-            entity.setCategory(product.getCategory());
+            entity.setName(wrapper.getName());
+            entity.setDescription(wrapper.getDescription());
+            entity.setProducer(wrapper.getProducer());
+            entity.setPrice(wrapper.getPrice());
+            if (image != null) {
+                entity.setImage(image);
+            }
+            entity.setCategory(categoryService.findCategory(wrapper.getCategory()));
         }
     }
 
@@ -60,7 +69,7 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> findAllProducts() {
         return productDAO.findAll();
     }
-    
+
     @Override
     public List<Product> findAllProductsByCategory(Long categoryId) {
         return productDAO.findAllByCategoryId(categoryId);
