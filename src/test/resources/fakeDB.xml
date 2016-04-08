@@ -1,0 +1,9 @@
+<dataset>
+    <category id="1" name="category1" description="description1" />
+    <category id="2" name="category2" description="description2" />
+    <category id="3" name="category3" description="description3" />
+    
+    <product id="11" name="product1" description="description1" producer="producer1" price="1100.00" date_create="2016-04-06 19:24:06.401" image="byte array" category_id="1" />
+    <product id="12" name="product2" description="description2" producer="producer2" price="1200.00" date_create="2016-04-07 19:24:06.401" image="byte array" category_id="1" />
+    <product id="13" name="product3" description="description3" producer="producer3" price="1300.00" date_create="2016-04-08 19:24:06.401" image="byte array" category_id="1" />
+</dataset>

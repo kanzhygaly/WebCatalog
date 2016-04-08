@@ -6,7 +6,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Categories</title>
         <link href="<c:url value='/static/css/bootstrap.min.css' />" rel="stylesheet"></link>
-        <script type="text/javascript" src="<c:url value='/static/js/app.js' />"></script>
     </head>
     <body>
 
@@ -60,5 +59,9 @@
                 <a href="<c:url value='/categories/add' />">New category</a>
             </div>
         </div>
+
+        <script type="text/javascript" src="<c:url value='/static/js/app.js' />"></script>
+        <script type="text/javascript" src="<c:url value='/static/js/bootstrap.min.js' />"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     </body>
 </html>
