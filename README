@@ -1,0 +1,15 @@
+WebCatalog
+- simple web application, which provides functionality to add any kind of product in any category.
+
+* Java 7
+* Maven
+* JUnit
+* Spring 3
+* Hibernate 3
+
+Run application:
+1. Build project: go to project folder and type from command line the command "mvn clean install"
+2. After project build completion, go to "target" folder. There you can see WordCounter-1.0.jar
+3. Run jar by typing the command "java -jar WordCounter-1.0.jar path_to_your_file"
+   path_to_your_file - path to input file, from which application will read a text
+4. After completion, application will show result in command line.
