@@ -19,22 +19,6 @@
     
     <!-- Sets Spring context to allow for dispatching requests to Controllers -->
     <mvc:annotation-driven /> 
-    
-    <!-- Any requests from this url pattern /static/**, Spring will look for the resources from the /WEB-INF/static/ instead -->
-    <mvc:resources mapping="/static/**" location="/WEB-INF/static/" />
- 
-    <!-- Maps between logical view names with real JSP files -->
-    <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
-        <property name="prefix" value="/WEB-INF/views/" />
-        <property name="suffix" value=".jsp" />
-    </bean>
-    
-    <!-- Uses multipartResolver for handling multipart request, with CommonsMultipartResolver implementation(uses Apache Commons File Upload) -->
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <!-- Maximum file size: 50MB (1MB = 125000 Byte) -->
-        <property name="maxUploadSize" value="6250000" />
-    </bean>
  
     <!-- Application message bundle -->
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
@@ -42,16 +26,13 @@
         <property name="defaultEncoding" value="UTF-8" />
     </bean>
     
-    <!-- Include datasource properties -->
-    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" p:location="/WEB-INF/jdbc.properties" />
- 
     <!-- Configure datasource -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
           destroy-method="close"
-          p:driverClass="${jdbc.driverClassName}"
-          p:jdbcUrl="${jdbc.url}"
-          p:user="${jdbc.username}"
-          p:password="${jdbc.password}"
+          p:driverClass="org.h2.Driver"
+          p:jdbcUrl="jdbc:h2:mem:web_catalog;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE"
+          p:user="wcuser"
+          p:password="wcpass"
           p:acquireIncrement="5"
           p:idleConnectionTestPeriod="60"
           p:maxPoolSize="100"
@@ -69,10 +50,9 @@
         </property>
         <property name="hibernateProperties">
             <props>
-                <prop key="hibernate.dialect">${jdbc.dialect}</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
                 <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.format_sql">true</prop>
-                <prop key="hibernate.use_sql_comments">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">create-drop</prop>
             </props>
         </property>
     </bean>

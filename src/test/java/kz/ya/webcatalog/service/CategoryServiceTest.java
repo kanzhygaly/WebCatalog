@@ -1,8 +1,6 @@
-/**
- * https://github.com/pkainulainen/spring-data-jpa-examples/tree/master/integration-testing
- */
 package kz.ya.webcatalog.service;
 
+import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import java.util.List;
 import kz.ya.webcatalog.entity.Category;
@@ -12,27 +10,28 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 
 /**
  *
  * @author YERLAN
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-//@ContextConfiguration(locations = {"classpath:beans.xml"})
-@ContextConfiguration(locations = {"/WEB-INF/spring-servlet.xml"})
-//@ContextConfiguration(classes = {PersistenceContext.class})
-//@TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
-//        TransactionalTestExecutionListener.class,
-//        DbUnitTestExecutionListener.class})
-@DatabaseSetup("fakeDB.xml")
+@ContextConfiguration(locations = {"test-spring-config.xml"})
+@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class,
+        DirtiesContextTestExecutionListener.class,
+        TransactionalTestExecutionListener.class,
+        DbUnitTestExecutionListener.class })
+@DatabaseSetup("sampleData.xml")
 public class CategoryServiceTest {
     
     @Autowired
-    CategoryService instance;
+    private CategoryService instance;
     
     @Before
     public void setUp() {
@@ -64,13 +63,10 @@ public class CategoryServiceTest {
     public void testSaveCategory() {
         System.out.println("saveCategory");
         
-        Long id = 101L;
-        
         Category category = new Category("myCategory", "some desc");
-        category.setId(id);
         instance.saveCategory(category);
-        
-        Category result = instance.findCategory(id);
+
+        Category result = instance.findCategory(category.getId());
         assertNotNull(result);
         assertEquals(category, result);
     }
@@ -87,6 +83,7 @@ public class CategoryServiceTest {
         
         Category category = instance.findCategory(id);
         category.setName(expResultName);
+        category.setProducts(null);
         instance.updateCategory(category);
         
         Category result = instance.findCategory(id);
@@ -114,9 +111,8 @@ public class CategoryServiceTest {
     public void testFindAllCategories() {
         System.out.println("findAllCategories");
         
-//        List<Category> expResult = null;
+        int expResult = 3;
         List<Category> result = instance.findAllCategories();
-        System.out.println(result.size());
-//        assertEquals(expResult, result);
+        assertEquals(expResult, result.size());
     }
 }

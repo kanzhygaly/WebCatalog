@@ -27,8 +27,9 @@ public interface ProductService {
      * 
      * @param wrapper
      * @param image 
+     * @return Product id
      */
-    void saveProduct(ProductWrapper wrapper, byte[] image);
+    Long saveProduct(ProductWrapper wrapper, byte[] image);
     
     /**
      * This method is used for updating information about product

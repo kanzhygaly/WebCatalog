@@ -38,7 +38,7 @@ public class ProductWrapper implements Serializable {
 
     public ProductWrapper() {
     }
-
+    
     public Long getId() {
         return id;
     }

@@ -28,7 +28,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void saveProduct(ProductWrapper wrapper, byte[] image) {
+    public Long saveProduct(ProductWrapper wrapper, byte[] image) {
         Product product = new Product();
         product.setName(wrapper.getName());
         product.setDescription(wrapper.getDescription());
@@ -40,6 +40,8 @@ public class ProductServiceImpl implements ProductService {
         }
         product.setCategory(categoryService.findCategory(wrapper.getCategory()));
         productDAO.persist(product);
+        
+        return product.getId();
     }
 
     @Override
