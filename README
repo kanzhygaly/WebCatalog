@@ -13,3 +13,5 @@ Run application:
 3. Run jar by typing the command "java -jar WordCounter-1.0.jar path_to_your_file"
    path_to_your_file - path to input file, from which application will read a text
 4. After completion, application will show result in command line.
+
+mvn install -DskipTests
